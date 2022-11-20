@@ -1,0 +1,65 @@
+version: '3.3'
+
+services:
+  customer_service:
+    container_name: customer_service
+    build: ./customer_service
+    depends_on:
+      - dbcustomer
+    ports:
+      - "9000:9000"
+  
+  post_service:
+    container_name: post_service
+    build: ./post-service
+    depends_on:
+      - dbpost
+    ports:
+      - "8000:8000"
+
+
+  reyting_service:
+    container_name: reyting_service
+    build: ./reyting_service
+    depends_on:
+      - dbreyting
+    ports:
+      - "1111:1111"
+  api:
+    container_name: api
+    build: ./api-gateway
+    depends_on:
+      - customer_service
+      - post_service
+      - reyting_service
+    ports:
+      - "8080:8080"
+  dbcustomer:
+    container_name: dbcustomer
+    image: postgres:latest
+    environment:
+      POSTGRES_DATABASE: customerdb 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5433:5433"
+
+  dbpost:
+    container_name: dbpost
+    image: postgres:latest
+    environment:
+      POSTGRES_DATABASE: postdb 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5434:5434"
+  
+  dbreyting:
+    container_name: dbreyting
+    image: postgres:latest
+    environment:
+      POSTGRES_DATABASE: reytingdb 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5435:5435"
