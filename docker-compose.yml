@@ -3,7 +3,7 @@ version: '3.3'
 services:
   customer_service:
     container_name: customer_service
-    build: customer_service
+    build: ./customer_service
     depends_on:
       - dbcustomer
     ports:
@@ -11,7 +11,7 @@ services:
   
   post_service:
     container_name: post_service
-    build: post-service
+    build: ./post-service
     depends_on:
       - dbpost
     ports:
@@ -20,7 +20,7 @@ services:
 
   reyting_service:
     container_name: reyting_service
-    build: reyting_service
+    build: ./reyting_service
     depends_on:
       - dbreyting
     ports:
